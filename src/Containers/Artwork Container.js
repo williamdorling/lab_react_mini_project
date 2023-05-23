@@ -17,12 +17,13 @@ const ArtworkContainer = () => {
             for (id of data.objectIDs){
                 const response = await fetch(`${SERVER_URL}/${id}`);
                 const data = await response.json();
-                artworkList.push(data);
+                if (data.primaryImageSmall !== ""){
+                   artworkList.push(data);
+                }
             }
             setArtworks(artworkList);
         }
-        fetchArtworks();
-              
+        fetchArtworks();    
     }, [])
 
     return ( 
