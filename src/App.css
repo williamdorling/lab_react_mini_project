@@ -51,8 +51,10 @@
   font-size:large;
 }
 
-.artwork-details{
+.artwork-details,
+.artwork-image{
   position: relative;
+  padding: 0.5%;
 }
 
 .artwork-details img{

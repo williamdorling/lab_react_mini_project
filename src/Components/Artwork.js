@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
 
-const Artwork = ({artwork}) => {
+const Artwork = ({artworkID}) => {
+
+    const [artwork, setArtwork] = useState(0);
+
+    const SERVER_URL = "https://collectionapi.metmuseum.org/public/collection/v1/objects";
+
+    useEffect (() => {
+        const fetchArtwork = async () => {
+            const response = await fetch(`${SERVER_URL}/${artworkID}`);
+            const data = await response.json();
+            setArtwork(data)
+        }
+        fetchArtwork();
+    }, [])
 
     const [inspecting, setInspecting] = useState(false);
 
@@ -28,47 +41,49 @@ const Artwork = ({artwork}) => {
     const handleClick2 = () => {
         setInspecting(!inspecting) 
     }
+    
 
-    return ( 
-        <>           
-            {/* <img src={artwork.primaryImageSmall}
-                loading="lazy"
-                alt={artwork.title + " by "+ artwork.artistDisplayName}
-                onClick={handleClick2}
-                /> */}
-            {inspecting ? 
-            <div className="artwork-details">
-                <img src={artwork.primaryImageSmall}
+    if(artwork.primaryImageSmall !== "" && artwork.primaryImageSmall !== undefined){
+        return ( 
+            <>           
+                {/* <img src={artwork.primaryImageSmall}
                     loading="lazy"
                     alt={artwork.title + " by "+ artwork.artistDisplayName}
                     onClick={handleClick2}
-                    />                    
-                <div className="text"
-                onClick={handleClick2}>
-                    <h2 >{artwork.title}</h2>
-                    <p>{artwork.objectDate}</p>
-                    <p>{artwork.medium}</p>
-                    <p>{artwork.dimensions}</p>
-                    <p>{artwork.geographyType}</p>
-                    {artwork.artistDisplayName !== "" ?
-                    <a href ={artwork.artistWikidata_URL} target="_blank">{artwork.artistDisplayName}, {artwork.artistBeginDate} - {artwork.artistEndDate} </a>
-                    : <p>Artist unknown</p>}
-                    
-                    <p>{artwork.rightsAndReproduction}</p>
+                    /> */}
+                {inspecting ? 
+                <div className="artwork-details">
+                    <img src={artwork.primaryImageSmall}
+                        loading="lazy"
+                        alt={artwork.title + " by "+ artwork.artistDisplayName}
+                        onClick={handleClick2}
+                        />                    
+                    <div className="text"
+                    onClick={handleClick2}>
+                        <h2 >{artwork.title}</h2>
+                        <p>{artwork.objectDate}</p>
+                        <p>{artwork.medium}</p>
+                        <p>{artwork.dimensions}</p>
+                        <p>{artwork.geographyType}</p>
+                        {artwork.artistDisplayName !== "" ?
+                        <a href ={artwork.artistWikidata_URL} target="_blank">{artwork.artistDisplayName}, {artwork.artistBeginDate} - {artwork.artistEndDate} </a>
+                        : <p>Artist unknown</p>}
+                        
+                        <p>{artwork.rightsAndReproduction}</p>
+                    </div>
                 </div>
-            </div>
-            : 
-            <div className="artwork-image">
-                <img src={artwork.primaryImageSmall}
-                    loading="lazy"
-                    alt={artwork.title + " by "+ artwork.artistDisplayName}
-                    onClick={handleClick2}
-                    />
-            </div>
-            }
-        
-        </>
-        );   
+                : 
+                <div className="artwork-image">
+                    <img src={artwork.primaryImageSmall}
+                        loading="lazy"
+                        alt={artwork.title + " by "+ artwork.artistDisplayName}
+                        onClick={handleClick2}
+                        />
+                </div>
+                }
+            </>
+            );
+    }   
 }
  
 export default Artwork;
