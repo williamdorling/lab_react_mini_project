@@ -36,3 +36,38 @@
     transform: rotate(360deg);
   }
 }
+
+.artwork-list{
+  display: flex;
+  /* align-items: flex-start; */
+  flex-wrap: wrap
+}
+
+.artwork-details p,
+.artwork-details h2,
+.artwork-details a,
+.artwork-details img{
+  min-width: 300px;
+  font-size:large;
+}
+
+.artwork-details{
+  position: relative;
+}
+
+.artwork-details img{
+  opacity: 30%;
+}
+
+.text {
+  position: absolute;
+  top: 0px;
+  left: 16px;
+}
+
+.artwork-image img{
+  float: left;
+  /* height: 300px; */
+  min-width: 300px;
+  object-fit: cover;
+} 

@@ -7,9 +7,9 @@ const ArtworkList = ({artworks}) => {
     })
 
     return ( 
-        <>
+        <div className="artwork-list">
             {artworkComponents}
-        </>
+        </div>
      );
 }
  

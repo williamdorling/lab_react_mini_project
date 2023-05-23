@@ -27,11 +27,11 @@ const ArtworkContainer = () => {
     }, [])
 
     return ( 
-        <>
+        <div className="container">
             <h1>Hello from container</h1>
             <ArtworkForm />
             <ArtworkList artworks={artworks}/>
-        </>
+        </div>
      );
 }
  
