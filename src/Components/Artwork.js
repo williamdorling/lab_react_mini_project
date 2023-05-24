@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Artwork = ({artworkID, artistFilter, centuryFilter, addToCultures, cultureFilter}) => {
+const Artwork = ({artworkID, artistFilter, centuryFilter, addToCultures, cultureFilter, addToMediums, mediumFilter, mediumSearchFilter}) => {
 
     const [artwork, setArtwork] = useState(0);
     const [inspecting, setInspecting] = useState(false);
@@ -26,17 +26,24 @@ const Artwork = ({artworkID, artistFilter, centuryFilter, addToCultures, culture
         addToCultures(artwork.culture);
     }
 
+    if (artwork.primaryImageSmall){
+        addToMediums(artwork.medium);
+    }
+
     const centuryUpperBound = centuryFilter * 100;
-    const centuryLowerBound = centuryFilter === 0 ? -10000000 : (centuryFilter-1) * 100;
+    const centuryLowerBound = centuryFilter === 0 ? -1/0 : (centuryFilter-1) * 100;
 
     const isInRange = centuryFilter === null || centuryFilter === "Select century" || ((centuryLowerBound <= artwork.objectEndDate) && (centuryUpperBound > artwork.objectBeginDate));
     const isCulture = cultureFilter === null || cultureFilter === undefined || cultureFilter ==="Select culture" || artwork.culture === cultureFilter;
+    const isMedium = mediumFilter === null || mediumFilter === undefined || mediumFilter ==="Select medium" || artwork.medium === mediumFilter;
 
     if(artwork.primaryImageSmall !== "" 
         && artwork.primaryImageSmall !== undefined
         && artwork.artistDisplayName.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').includes(artistFilter)
         && isCulture
         && isInRange
+        && isMedium
+        && artwork.medium.toLowerCase().includes(mediumSearchFilter)
         ){
         return ( 
             <>           
@@ -50,9 +57,9 @@ const Artwork = ({artworkID, artistFilter, centuryFilter, addToCultures, culture
                     <div className="text"
                     onClick={handleClick}>
                         <h2 >{artwork.title}</h2>
-                        <p>{artwork.objectDate}</p>
-                        <p>{artwork.medium}</p>
-                        <p>{artwork.dimensions}</p>
+                        <p>Date: {artwork.objectDate}</p>
+                        <p>Medium: {artwork.medium}</p>
+                        <p>Dimensions: {artwork.dimensions}</p>
                         {artwork.artistDisplayName !== "" ?
                         <a href ={artwork.artistWikidata_URL} target="_blank">{artwork.artistDisplayName}, {artwork.artistBeginDate} - {artwork.artistEndDate} </a>
                         : <p>Artist unknown</p>}
@@ -67,7 +74,6 @@ const Artwork = ({artworkID, artistFilter, centuryFilter, addToCultures, culture
                         alt={artwork.title + " by "+ artwork.artistDisplayName}
                         onClick={handleClick}
                         />
-                    {/* <p>{artwork.objectID}</p> */}
                 </div>
                 }
             </>

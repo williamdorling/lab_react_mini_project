@@ -1,36 +1,18 @@
 import { useEffect, useState } from "react";
 import ArtworkForm from "../Components/ArtworkForm";
-// import ArtworkList from "../Components/ArtworkList";
 import Artwork from "../Components/Artwork";
 
 const ArtworkContainer = () => {
 
-    const SERVER_URL = "https://collectionapi.metmuseum.org/public/collection/v1/objects"
-
-    const [artworks, setArtworks] = useState([]);
     const [artworkIDs, setArtworkIDs] = useState([]);
     const [artistFilter, setArtistFilter] = useState("");
     const [centuryFilter, setCenturyFilter] = useState(null);
     const [cultures, setCultures] = useState([]);
     const [cultureFilter, setCultureFilter] = useState(null);
+    const [mediums, setMediums] = useState([]);
+    const [mediumFilter, setMediumFilter] = useState(null);
+    const [mediumSearchFilter, setMediumSearchFilter] = useState("");
 
-    // useEffect (() => {
-    //     const fetchArtworks = async () => {
-    //         const response = await fetch("https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=e&medium=Paintings&isHighlight=true");
-    //         const data = await response.json();
-    //         let id;
-    //         let artworkList = []
-    //         for (id of data.objectIDs){
-    //             const response = await fetch(`${SERVER_URL}/${id}`);
-    //             const data = await response.json();
-    //             if (data.primaryImageSmall !== ""){
-    //                artworkList.push(data);
-    //             }
-    //         }
-    //         setArtworks(artworkList);
-    //     }
-    //     fetchArtworks();    
-    // }, [])
 
     useEffect (() => {
         const fetchArtworkIDs = async () => {
@@ -48,20 +30,34 @@ const ArtworkContainer = () => {
         }
     }
 
+    const addToMediums = (newMedium) =>{
+        if (!mediums.includes(newMedium) && newMedium !== "" && newMedium!==undefined){
+            setMediums([...mediums, newMedium])
+        }
+    }
+
+
     const artworkIDComponents = artworkIDs.map((artworkID) => {
         return <Artwork 
                 artworkID={artworkID} 
                 artistFilter={artistFilter} 
                 centuryFilter={centuryFilter}
                 addToCultures={addToCultures}
-                cultureFilter={cultureFilter}/>
+                cultureFilter={cultureFilter}
+                addToMediums={addToMediums}
+                mediumFilter={mediumFilter}
+                mediumSearchFilter={mediumSearchFilter}/>
     })
 
     return ( 
         <div className="container">
-            <ArtworkForm setArtistFilter={setArtistFilter} setCenturyFilter={setCenturyFilter} cultures={cultures} setCultureFilter={setCultureFilter}/>
-            {/* <ArtworkList artworks={artworks}/> */}
-            {/* <ArtworkList artworkIDs={artworkIDs}/> */}
+            <ArtworkForm setArtistFilter={setArtistFilter} 
+                setCenturyFilter={setCenturyFilter} 
+                cultures={cultures} 
+                setCultureFilter={setCultureFilter}
+                mediums={mediums}
+                setMediumFilter={setMediumFilter}
+                setMediumSearchFilter={setMediumSearchFilter}/>
             <div className="artwork-list">
                 {artworkIDComponents}
             </div>

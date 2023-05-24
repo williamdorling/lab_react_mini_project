@@ -39,6 +39,7 @@
 
 .artwork-list{
   display: flex;
+  align-items: center;
   /* align-items: flex-start; */
   flex-wrap: wrap
 }
@@ -58,22 +59,18 @@
 }
 
 .artwork-details img{
-  opacity: 30%;
+  opacity: 40%;
 }
 
 .text {
   position: absolute;
   top: 0px;
   left: 16px;
+  right: 16px;
 }
-
-/* .rights {
-  bottom: 10px;
-} */
 
 .artwork-image img{
   float: left;
-  /* height: 300px; */
   min-width: 300px;
   object-fit: cover;
 } 
@@ -84,4 +81,32 @@ body {
 
 form {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding-left: 2%;
+}
+
+h1 {
+  padding-left: 2%;
+}
+
+.artwork-list {
+  padding: 1.5%;
+}
+
+.form-search{
+  display: flex;
+  
+}
+
+.form-search input {
+  max-width: 20%;
+}
+
+.form-select {
+  display: flex;
+  flex-direction: column;
+}
+
+form select {
+  width: 
+  25%;
 }
