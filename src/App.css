@@ -67,9 +67,21 @@
   left: 16px;
 }
 
+/* .rights {
+  bottom: 10px;
+} */
+
 .artwork-image img{
   float: left;
   /* height: 300px; */
   min-width: 300px;
   object-fit: cover;
 } 
+
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+form {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}

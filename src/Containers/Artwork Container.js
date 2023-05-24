@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ArtworkForm from "../Components/ArtworkForm";
-import ArtworkList from "../Components/ArtworkList";
+// import ArtworkList from "../Components/ArtworkList";
+import Artwork from "../Components/Artwork";
 
 const ArtworkContainer = () => {
 
@@ -8,6 +9,10 @@ const ArtworkContainer = () => {
 
     const [artworks, setArtworks] = useState([]);
     const [artworkIDs, setArtworkIDs] = useState([]);
+    const [artistFilter, setArtistFilter] = useState("");
+    const [centuryFilter, setCenturyFilter] = useState(null);
+    const [cultures, setCultures] = useState([]);
+    const [cultureFilter, setCultureFilter] = useState(null);
 
     // useEffect (() => {
     //     const fetchArtworks = async () => {
@@ -36,12 +41,30 @@ const ArtworkContainer = () => {
         fetchArtworkIDs();
     }, [])
 
+
+    const addToCultures = (newCulture) =>{
+        if (!cultures.includes(newCulture) && newCulture !== "" && newCulture!==undefined){
+            setCultures([...cultures, newCulture])
+        }
+    }
+
+    const artworkIDComponents = artworkIDs.map((artworkID) => {
+        return <Artwork 
+                artworkID={artworkID} 
+                artistFilter={artistFilter} 
+                centuryFilter={centuryFilter}
+                addToCultures={addToCultures}
+                cultureFilter={cultureFilter}/>
+    })
+
     return ( 
         <div className="container">
-            <h1>Hello from container</h1>
-            <ArtworkForm />
+            <ArtworkForm setArtistFilter={setArtistFilter} setCenturyFilter={setCenturyFilter} cultures={cultures} setCultureFilter={setCultureFilter}/>
             {/* <ArtworkList artworks={artworks}/> */}
-            <ArtworkList artworkIDs={artworkIDs}/>
+            {/* <ArtworkList artworkIDs={artworkIDs}/> */}
+            <div className="artwork-list">
+                {artworkIDComponents}
+            </div>
         </div>
      );
 }
